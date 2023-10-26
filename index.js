@@ -27,3 +27,14 @@ Hen's Changes are very serious and cannot be overwritten.
 //leah first change.
 
 //Leah's second change
+
+
+
+
+
+
+document.querySelector('.card').addEventListener('click', function() {
+    const innerCard = this.querySelector('.card-inner');
+    innerCard.style.transform = innerCard.style.transform === 'rotateY(180deg)' ? 'rotateY(0deg)' : 'rotateY(180deg)';
+  });
+  
