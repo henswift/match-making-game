@@ -20,7 +20,7 @@ Two people playing the game and they take turns guessing.
 
 
 
-Hen's Changes
+Hen's Changes are very serious and cannot be overwritten. 
 
 */
 
