@@ -31,10 +31,18 @@ Hen's Changes are very serious and cannot be overwritten.
 
 
 
+// If you don't want to unflip the last one... I think
 
-
+// document.querySelectorAll('.card').forEach(function(card) {
+//     card.addEventListener('click', function() {
+//       const innerCard = this.querySelector('.card-inner');
+//       innerCard.style.transform = 
+//         innerCard.style.transform === 'rotateY(180deg)' ? 'rotateY(0deg)' : 'rotateY(180deg)';
+//     });
+//   });
   
-  let lastFlippedCard = null;
+  
+let lastFlippedCard = null;
 
 document.querySelectorAll('.card').forEach(function(card) {
   card.addEventListener('click', function() {

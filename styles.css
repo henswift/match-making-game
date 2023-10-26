@@ -1,8 +1,9 @@
 .card {
-    width: 200px;
+    width: 215px;
     height: 300px;
     perspective: 1000px;
     margin: 16px;
+    position: relative;
   }
   
   .card-inner {
@@ -23,19 +24,39 @@
   .card-front img {
     object-fit: cover;
     height: 300px;
+    width: 215px;
     border-radius: 15px;
   }
-  
-  .card-back {
-    background: lightgreen;
-    transform: rotateY(180deg);
-    border-radius: 5px;
+  .card-front {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.5s ease-in-out, transform 0.5s ease-in-out;
+    border-radius: 15px;
   }
 
-
+  .card-front:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 8px 24px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+  }
+  
+  .card-back img {
+    object-fit: cover;
+    width: 215px;
+    border-radius: 15px; 
+  }
+  .card-back {
+    background: white;
+    border: solid 1px black;
+    transform: rotateY(180deg);
+    border-radius: 15px;
+    display: flex;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+  }
+  
   #cardsection {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
   }
       
 
