@@ -34,7 +34,7 @@ Two people playing the game and they take turns guessing.
 //     });
 //   });
   
-  
+  */
 let lastFlippedCard = null;
 
 document.querySelectorAll('.card').forEach(function(card) {
@@ -54,5 +54,3 @@ document.querySelectorAll('.card').forEach(function(card) {
     lastFlippedCard = innerCard.style.transform === 'rotateY(180deg)' ? innerCard : null;
   });
 });
-
-  
