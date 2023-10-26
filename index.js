@@ -20,13 +20,6 @@ Two people playing the game and they take turns guessing.
 
 
 
-Hen's Changes are very serious and cannot be overwritten. 
-
-*/
-
-//leah first change.
-
-//Leah's second change
 
 
 
