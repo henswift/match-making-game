@@ -33,8 +33,25 @@ Hen's Changes are very serious and cannot be overwritten.
 
 
 
-document.querySelector('.card').addEventListener('click', function() {
+  
+  let lastFlippedCard = null;
+
+document.querySelectorAll('.card').forEach(function(card) {
+  card.addEventListener('click', function() {
     const innerCard = this.querySelector('.card-inner');
-    innerCard.style.transform = innerCard.style.transform === 'rotateY(180deg)' ? 'rotateY(0deg)' : 'rotateY(180deg)';
+
+    // Flip the current card
+    innerCard.style.transform = 
+      innerCard.style.transform === 'rotateY(180deg)' ? 'rotateY(0deg)' : 'rotateY(180deg)';
+
+    // If there was a last flipped card, flip it back
+    if (lastFlippedCard && lastFlippedCard !== innerCard) {
+      lastFlippedCard.style.transform = 'rotateY(0deg)';
+    }
+
+    // Update lastFlippedCard
+    lastFlippedCard = innerCard.style.transform === 'rotateY(180deg)' ? innerCard : null;
   });
+});
+
   

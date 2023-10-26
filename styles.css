@@ -1,7 +1,8 @@
 .card {
-    width: 100px;
-    height: 150px;
+    width: 200px;
+    height: 300px;
     perspective: 1000px;
+    margin: 16px;
   }
   
   .card-inner {
@@ -11,10 +12,6 @@
     transition: transform 0.5s;
   }
   
-  /* .card:hover .card-inner {
-    transform: rotateY(180deg);
-  } */
-  
   .card-front,
   .card-back {
     width: 100%;
@@ -23,10 +20,10 @@
     backface-visibility: hidden;
   }
   
-  .card-front {
-    background: lightblue;
-    border-radius: 5px;
-;
+  .card-front img {
+    object-fit: cover;
+    height: 300px;
+    border-radius: 15px;
   }
   
   .card-back {
@@ -34,4 +31,13 @@
     transform: rotateY(180deg);
     border-radius: 5px;
   }
+
+
+  #cardsection {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+      
+
+
   
