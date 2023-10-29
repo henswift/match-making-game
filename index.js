@@ -20,86 +20,126 @@ One file for creating cards and another one for making the game run.
 
 */
 
+
+// grab start button from html to use in class MatchingGame
 let startButton = document.getElementById('loadCards');
 
+let numberOfFlips = 0;
+let playerOnePoints = 0;
+let playerTwoPoints = 0;
+
 class Card {
-  constructor(image,id) {
-    this.image = image;
-    this.id = id;
+  // Constructs a new object Card given the parameters (image, id)
+  constructor(image, id) {
+    this.image = image; // Superhero image
+    this.id = id; // ex. 1.2, 2.2, 3.1, etc.
     this.facedown = true; // if true then show image
   }
 }
 
+
 class MatchingGame {
   constructor() {
     this.cards = [];
+    // Start button
     startButton.addEventListener('click', () => {
       this.createCards();
       this.loadCards();
     })
   }
 
+
+  // Creates 16 cards and adds them to our array this.cards.
+  // Randomizes the this.cards at the end
   createCards() {
-    // we're creating a function that will load all 8 pairs into our div and randomize the order of the cards.
-    
-    // include a button that will load the cards in when clicked
-    
-    // creating an array of 16 cards with each card being called twice
-    
-    // randomize the array (shuffle function)
-    
-    // append the randomized array onto ID cardSection
+    // 1. loop twice through each of the 8 images
+    for (let x = 1; x <= 8; x++) {
+      for (let i = 1; i <= 2; i++) {
 
-      for (let x = 1; x <= 8; x++) {
-        for(let i = 1; i <= 2; i++) {
-          let card = new Card(`${x}-Superhero.png`,`${x}.${i}`)
+        // create a card with the previously defined card class, and pass it the parameters needed (image, id)
+        let card = new Card(`${x}-Superhero.png`, `${x}.${i}`)
 
-          
-          this.cards.push(card);
-
-          // this.cards.forEach(element => cardsection.append(matchCard));
-
-        }
-     }
-
-      for (let i = this.cards.length - 1; i > 0; i--) { 
-        const j = Math.floor(Math.random() * (i + 1)); 
-        [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]]; 
+        // push the card we just made onto our card array, this.cards.
+        this.cards.push(card);
       }
+    }
+
+    // 2. Randomize the order of this.cards 
+    for (let i = this.cards.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
+    }
   }
 
-  loadCards() {
 
+  // for each of the card objects in array this.cards, create and append html elements to cardSection.
+  loadCards() {
+    // grab the html section that we want to append the cards to
     let cardDiv = document.getElementById('cardSection');
+    // idk what this does but the cards don't flip without it
     cardDiv.innerHTML = "";
 
+    // for each card of our array this.cards:
     for (let card of this.cards) {
+      // 1. create a div and an image (with attribute card)
       let matchCard = document.createElement('div');
       let image = document.createElement('img');
+      image.setAttribute('class', 'card');
 
+      // 2. if the card is facedown, show facedown image.  Otherwise show the superhero image that the card has
       image.src = card.facedown ? 'cardfront.jpeg' : card.image;
-      image.setAttribute('class','card');
 
+      // 3. append the image to the div, and the div to the html section we grabbed
       matchCard.append(image);
       cardDiv.append(matchCard);
-      
+
+      // 4. add the flipCard function when the card is clicked
+
+      // QUESTION: store the object that was clicked somehow  for matchCardIds (??)
+
+      // - Leah - added if statement
       matchCard.addEventListener('click', () => {
+        if (!card.flipped){
           this.flipCard(card);
+        }
       })
     }
   }
-    
 
-    flipCard(card) { //returns true or false if the card ID's match or not
-      //
-      card.facedown = !card.facedown;
+  // Returns true or false if the card IDs match or not
+  // I don't actually know how this function works tbh
+  flipCard(card) { 
+    card.facedown = !card.facedown;
+    this.loadCards();
+    // - Leah: count how many times we run this function and save that to nuumberOfFlips
+    numberOfFlips++;
+    // = Leah - set card.flipped to true QUESTION: why define it like this instead of cardFlipped?
+    card.flipped = true;
+  }
 
-      this.loadCards();
+
+  // For every two cards clicked, check to see if the IDs of the selected cards match (1.1,1.2 or 3.1,3.2).
+  // If they match, then delete the pair and add one point to the current player.
+  // If they don't match, flip them back over and move to the next player.
+  matchCardIds (card1, card2) {
+    // For every other click
+    if (numberOfFlips % 2 === 0 && numberOfFlips != 0) {
+      // If Ids match (or both start with the same digit? idk)
+      if (card1.id.startsWith(card2.id)) {
+        console.log("match")
+      }
+      else {
+        console.log("not a match")
+      }
     }
+  }
 
 }
 
+// Create game with class MatchingGame
 let game = new MatchingGame();
+
+
 
 
 // function shuffleArray(array) {
@@ -133,9 +173,8 @@ let game = new MatchingGame();
 
 
 
-let playerOnePoints = 0;
-let playerTwoPoints = 0;
-// every time the doesCardMatch returns false, 
+
+// every time the doesCardMatch returns false,
 
 
 // May be unnessicary at one point but this is what flips the cards as of now....  Hen
@@ -147,7 +186,7 @@ let playerTwoPoints = 0;
 //     const innerCard = this.querySelector('.card-inner');
 
 //     // Flip the current card
-//     innerCard.style.transform = 
+//     innerCard.style.transform =
 //       innerCard.style.transform === 'rotateY(180deg)' ? 'rotateY(0deg)' : 'rotateY(180deg)';
 
 //     // If there was a last flipped card, flip it back
