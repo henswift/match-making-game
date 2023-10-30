@@ -10,6 +10,10 @@ header {
   text-align: center;
 }
 
+h1 {
+  margin: 55px;
+}
+
 h2 {
     display: flex;
     padding-top: 10px;
@@ -21,18 +25,16 @@ h2 {
     border-radius: 15px;
 }
 
-
-
 .card {
-    width: 215px;
-    height: 300px;
+    width: 17vw;
+    height: 20vh;
     perspective: 1000px;
     margin: 15px;
     position: relative;
   }
 
   /* Card Section */
-  #cardsection {
+  #cardSection {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

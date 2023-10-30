@@ -95,11 +95,11 @@ class MatchingGame {
 
       // 4. add the flipCard function when the card is clicked
 
-      // QUESTION: store the object that was clicked somehow  for matchCardIds (??)
+      // QUESTION: store the object that was clicked somehow for matchCardIds (??)
 
       // - Leah - added if statement
       matchCard.addEventListener('click', () => {
-        if (!card.flipped){
+        if (!card.flipped) {
           this.flipCard(card);
         }
       })
@@ -108,7 +108,7 @@ class MatchingGame {
 
   // Returns true or false if the card IDs match or not
   // I don't actually know how this function works tbh
-  flipCard(card) { 
+  flipCard(card) {
     card.facedown = !card.facedown;
     this.loadCards();
     // - Leah: count how many times we run this function and save that to nuumberOfFlips
@@ -121,20 +121,22 @@ class MatchingGame {
   // For every two cards clicked, check to see if the IDs of the selected cards match (1.1,1.2 or 3.1,3.2).
   // If they match, then delete the pair and add one point to the current player.
   // If they don't match, flip them back over and move to the next player.
-  matchCardIds (card1, card2) {
+  matchCardIds() {
+
+    let flippedCards = [];
     // For every other click
     if (numberOfFlips % 2 === 0 && numberOfFlips != 0) {
       // If Ids match (or both start with the same digit? idk)
-      if (card1.id.startsWith(card2.id)) {
-        console.log("match")
+      for (card of this.cards) {
+        if (card.flipped === true) {
+          flippedCards.push(card);
+          console.log(flippedCards);
+          }
+        }
       }
-      else {
-        console.log("not a match")
-      }
+
     }
   }
-
-}
 
 // Create game with class MatchingGame
 let game = new MatchingGame();
