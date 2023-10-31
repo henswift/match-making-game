@@ -20,6 +20,11 @@ One file for creating cards and another one for making the game run.
 
 */
 
+// suggestions: more than two players, who's turn is it?
+
+// difficulty levels?
+// change themes?
+//
 
 // grab start button from html to use in class MatchingGame
 let startButton = document.getElementById('loadCards');
@@ -43,8 +48,10 @@ class MatchingGame {
     this.cards = [];
     // Start button
     startButton.addEventListener('click', () => {
+      this.cards = []; //Hen - This should clear the cards array everytime you click the button
       this.createCards();
       this.loadCards();
+      console.log("Button Clicked");
     })
   }
 
@@ -65,10 +72,10 @@ class MatchingGame {
     }
 
     // 2. Randomize the order of this.cards 
-    for (let i = this.cards.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
-    }
+    // for (let i = this.cards.length - 1; i > 0; i--) {
+    //   const j = Math.floor(Math.random() * (i + 1));
+    //   [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
+    // }
   }
 
 
@@ -94,14 +101,17 @@ class MatchingGame {
       cardDiv.append(matchCard);
 
       // 4. add the flipCard function when the card is clicked
-
-      // QUESTION: store the object that was clicked somehow for matchCardIds (??)
-
       // - Leah - added if statement
       matchCard.addEventListener('click', () => {
-        if (!card.flipped) {
+        if (!card.flipped && numberOfFlips < 2) {
           this.flipCard(card);
         }
+      })
+      matchCard.addEventListener('click', () => {
+        if (numberOfFlips === 2) {
+          this.matchCardIds();
+        }
+
       })
     }
   }
@@ -117,30 +127,39 @@ class MatchingGame {
     card.flipped = true;
   }
 
-
+   
   // For every two cards clicked, check to see if the IDs of the selected cards match (1.1,1.2 or 3.1,3.2).
   // If they match, then delete the pair and add one point to the current player.
   // If they don't match, flip them back over and move to the next player.
-  matchCardIds() {
 
+  matchCardIds() {
     let flippedCards = [];
-    // For every other click
-    if (numberOfFlips % 2 === 0 && numberOfFlips != 0) {
-      // If Ids match (or both start with the same digit? idk)
-      for (card of this.cards) {
-        if (card.flipped === true) {
-          flippedCards.push(card);
-          console.log(flippedCards);
+      for (let element of this.cards) {
+        if (element.flipped === true) {
+          flippedCards.push(element);
           }
         }
+      console.log(flippedCards); // just checking
+      if (flippedCards[0].id.startsWith(flippedCards[1].id.charAt(0))) {
+        console.log("cards match");
       }
+      else {
+        // Flip the cards back over function should go here. 
+        console.log('cards do not match');
+        // for (element of flippedCards) {
+        //   element.facedown = true;
+        // }
 
+      }
+    numberOfFlips = 0;
     }
-  }
-
+  
+}
 // Create game with class MatchingGame
 let game = new MatchingGame();
 
+// questions: every time start game is pushed, the cards don't clear
+// start button
 
 
 
