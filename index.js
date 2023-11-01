@@ -35,9 +35,10 @@ let playerTwoPoints = 0;
 
 class Card {
   // Constructs a new object Card given the parameters (image, id)
-  constructor(image, id) {
+  constructor(image, id,imageClass) {
     this.image = image; // Superhero image
     this.id = id; // ex. 1.2, 2.2, 3.1, etc.
+    this.imageClass = imageClass; // ex. frontPhoto
     this.facedown = true; // if true then show image
   }
 }
@@ -64,7 +65,7 @@ class MatchingGame {
       for (let i = 1; i <= 2; i++) {
 
         // create a card with the previously defined card class, and pass it the parameters needed (image, id)
-        let card = new Card(`${x}-Superhero.png`, `${x}.${i}`)
+        let card = new Card(`${x}-Superhero.png`, `${x}.${i}`,"frontPhoto")
 
         // push the card we just made onto our card array, this.cards.
         this.cards.push(card);
@@ -91,6 +92,7 @@ class MatchingGame {
       // 1. create a div and an image (with attribute card)
       let matchCard = document.createElement('div');
       let image = document.createElement('img');
+      let imageClass = frontPhoto;
       image.setAttribute('class', 'card');
 
       // 2. if the card is facedown, show facedown image.  Otherwise show the superhero image that the card has
