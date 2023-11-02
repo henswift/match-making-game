@@ -42,6 +42,10 @@ class MatchingGame {
       this.players.push(player);
     }
     this.currentPlayer = this.players[0];
+
+
+    //I ADDED THIS LINE FOR THE RADIO BUTTONS- Leah
+    let numberOfPlayers2 = document.getElementsByName('players');
   }
 
   loadPlayers() {
