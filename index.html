@@ -13,36 +13,31 @@
     <header>
       <h1>Match-making Game</h1>
       <section id="playerSection">
+        <h4>How many players do you have?</h4>
         <form>
-          <h2>Number of Players</h2>
-          <h4>How many players do you have?</h4>
-          <input type="radio" name="players" value="1">1
-          <input type="radio" name="players" value="2">2
-          <input type="radio" name="players" value="3">3
-          <input type="radio" name="players" value="4">4
+          <div>
+            <input type="radio" name="players" value="1">
+            <label for="radio">1</label>
+          </div>
+          <div>
+            <input type="radio" name="players" value="2">
+            <label for="radio">2</label>
+          </div>
+          <div>
+            <input type="radio" name="players" value="3">
+            <label for="radio">3</label>
+          </div>
+          <div>
+            <input type="radio" name="players" value="4">
+            <label for="radio">4</label>
+          </div>
         </form>
-
-
-        <!-- <input id="numberOfPlayers" type="number">
-        <input id="playerButton" type="button" value="Go"> -->
-        <!-- <div>
-          <h3>Player 1</h3>
-        </div>
-        <div>
-          <h3>Player 2</h3>
-        </div> -->
       </section>
       <div id='currentPlayer'></div>
-    
-      <!-- <section id="scoreSection">
-        <h2>Scores</h2>
-      </section> -->
-      <input id="loadCards" type="button" value="Start Game">
+      <input id="start" type="button" value="START">
     </header>
+    <section id="instructions"></section>
     <section id="maincardsection">
-      <div>
-        <h2>Take Your Pick</h2>
-      </div>
       <div id="cardSection">
       </div>
       <!-- This is where the cards would go. -->

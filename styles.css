@@ -6,12 +6,14 @@
     margin: 0;
   }
 
+  body {
+    background-image: url(cloudy-rainbow.jpg);
+    background-size: cover;
+    color: white;
+  }
+
 header {
   text-align: center;
-}
-
-h1 {
-  margin: 55px;
 }
 
 h2 {
@@ -21,6 +23,15 @@ h2 {
     margin-bottom: 10px;
     border-radius: 15px;
     width: 100%;
+}
+
+h3 {
+  text-align: center;
+}
+
+form {
+  display: flex;
+  gap: 15px;
 }
 
 .card {
@@ -48,6 +59,8 @@ h2 {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin: 100px;
+    margin-top: 40px;
 }
 
 #playerSection {
@@ -57,10 +70,27 @@ h2 {
   justify-content: center;
   align-items: center;
   margin: 10px 0px 10px 0px;
+  gap: 25px;
+}
+
+#start, #currentPlayer, .player, h1, h3, h4 {
+  margin: 20px;
+}
+
+#start{
+  background-color: rgba(0, 0, 0, 0.589);
+  color: white;
+  padding: 10px;
+  font-size: 18px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+h1, h3 {
+  margin-top: 40px;
 }
 
       
-
 /*   
   .card-inner {
     width: 100%;
