@@ -12,19 +12,32 @@
   <section id="outersection">
     <header>
       <h1>Match-making Game</h1>
-      <input id="loadCards" type="button" value="Start Game">
       <section id="playerSection">
-        <h2>Players</h2>
-        <div>
+        <form>
+          <h2>Number of Players</h2>
+          <h4>How many players do you have?</h4>
+          <input type="radio" name="players" value="1">1
+          <input type="radio" name="players" value="2">2
+          <input type="radio" name="players" value="3">3
+          <input type="radio" name="players" value="4">4
+        </form>
+
+
+        <!-- <input id="numberOfPlayers" type="number">
+        <input id="playerButton" type="button" value="Go"> -->
+        <!-- <div>
           <h3>Player 1</h3>
         </div>
         <div>
           <h3>Player 2</h3>
-        </div>
+        </div> -->
       </section>
-      <section id="scoreSection">
+      <div id='currentPlayer'></div>
+    
+      <!-- <section id="scoreSection">
         <h2>Scores</h2>
-      </section>
+      </section> -->
+      <input id="loadCards" type="button" value="Start Game">
     </header>
     <section id="maincardsection">
       <div>
