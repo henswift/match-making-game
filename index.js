@@ -16,7 +16,6 @@ class Player {
   }
 }
 
-
 class MatchingGame {
   constructor() {
     this.cards = [];
@@ -76,7 +75,6 @@ class MatchingGame {
     playerSection.innerHTML = "";
 
     for (let player of this.players) {
-      console.log('in load players', player);
       let playerBlock = document.createElement('div');
       let playerName = document.createElement('h2');
       let playerPoints = document.createElement('h2');
@@ -108,7 +106,7 @@ class MatchingGame {
 
       matchCard.addEventListener('click', () => {
         this.flipCard(card);
-      })
+      });
     }
   }
 
@@ -120,20 +118,44 @@ class MatchingGame {
     this.matchCardIds();
   }
 
-  matchCardIds() {
-    if (this.flippedCards.length !== 2) return;
+  cardsMatch(card1, card2) {
+    let indexOfCard1 = this.cards.indexOf(card1);
+    this.currentPlayer.wonCards.push(this.cards.splice(indexOfCard1, 1));
 
-    console.log(this.flippedCards);
-    let [card1, card2] = this.flippedCards;
+    let indexOfCard2 = this.cards.indexOf(card2)
+    this.currentPlayer.wonCards.push(this.cards.splice(indexOfCard2, 1));
 
-    if (card1.image === card2.image) {
-      console.log('cards match!');
-      this.currentPlayer = this.players[1];
-      this.flippedCards = [];
+    this.currentPlayer.points = this.currentPlayer.wonCards.length / 2;
+  }
+
+  cardsDoNotMatch(card1, card2) {
+    console.log(card1.id, card2.id);
+    let indexOfCurrent = this.players.indexOf(this.currentPlayer);
+    if (indexOfCurrent < this.players.length - 1) {
+      this.currentPlayer = this.players[indexOfCurrent + 1];
     }
     else {
-      console.log('cards do not match');
+      this.currentPlayer = this.players[0];
     }
+    // this.flippedCards.forEach((card) => card.facedown = true);
+  }
+
+  matchCardIds() {
+    if (this.flippedCards.length !== 2) return;
+    let [card1, card2] = this.flippedCards;
+    // setTimeout(this.cardsMatch, "1000");
+    // setTimeout(this.cardsDoNotMatch, "1000");
+
+    if (card1.image === card2.image) {
+      this.cardsMatch(card1, card2)
+    }
+    else {
+      this.cardsDoNotMatch(card1, card2);
+    }
+    this.flippedCards = [];
+    this.loadPlayers();
+    this.loadCards();
+    console.log(this.cards);
   }
 }
 
