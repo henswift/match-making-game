@@ -58,7 +58,7 @@ class MatchingGame {
   createCards() {
     for (let x = 1; x <= 8; x++) {
       for (let i = 1; i <= 2; i++) {
-        let card = new Card(`${x}-Superhero.png`, `${x}.${i}`)
+        let card = new Card(`/photos/${x}-Superhero.png`, `${x}.${i}`)
         this.cards.push(card);
       }
     }
