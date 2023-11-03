@@ -10,6 +10,8 @@
     background-image: url(cloudy-rainbow.jpg);
     background-size: cover;
     color: white;
+    background-position: center;
+    height: 100vh;
   }
 
 header {
@@ -90,6 +92,9 @@ h1, h3 {
   margin-top: 40px;
 }
 
+.invisible {
+  opacity: .2;
+}
       
 /*   
   .card-inner {

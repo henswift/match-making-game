@@ -31,6 +31,8 @@ class MatchingGame {
       this.createPlayers();
       this.loadPlayers();
     })
+
+    //extrapolate event listener logic
   }
 
   loadInstructions() {
@@ -69,7 +71,7 @@ class MatchingGame {
     // }
   }
 
-  loadPlayers() {
+  loadPlayers() { //draws cards
     let playerSection = document.getElementById('playerSection');
     let current = document.getElementById('currentPlayer');
     playerSection.innerHTML = "";
@@ -98,15 +100,19 @@ class MatchingGame {
 
       let matchCard = document.createElement('div');
       let image = document.createElement('img');
-      image.setAttribute('class', 'card');
+      image.setAttribute('class', card.isWon ? 'card invisible' : 'card');
       image.src = card.facedown ? 'cardfront.jpeg' : card.image;
 
       matchCard.append(image);
       cardDiv.append(matchCard);
-
-      matchCard.addEventListener('click', () => {
-        this.flipCard(card);
-      });
+      if (!card.isWon){
+        matchCard.addEventListener('click', () => {
+          if (this.flippedCards.length === 2) {
+            return;
+          }
+          this.flipCard(card);
+        });
+      }
     }
   }
 
@@ -118,18 +124,19 @@ class MatchingGame {
     this.matchCardIds();
   }
 
-  cardsMatch(card1, card2) {
-    let indexOfCard1 = this.cards.indexOf(card1);
-    this.currentPlayer.wonCards.push(this.cards.splice(indexOfCard1, 1));
-
-    let indexOfCard2 = this.cards.indexOf(card2)
-    this.currentPlayer.wonCards.push(this.cards.splice(indexOfCard2, 1));
-
+  cardsMatch(matchedCards) {
+    for (let card of matchedCards){
+      this.currentPlayer.wonCards.push(card);
+      card.isWon = true;
+    }
     this.currentPlayer.points = this.currentPlayer.wonCards.length / 2;
+    this.flippedCards = [];
+    this.loadPlayers();
+    this.loadCards();
   }
 
   cardsDoNotMatch(card1, card2) {
-    console.log(card1.id, card2.id);
+    
     let indexOfCurrent = this.players.indexOf(this.currentPlayer);
     if (indexOfCurrent < this.players.length - 1) {
       this.currentPlayer = this.players[indexOfCurrent + 1];
@@ -137,39 +144,37 @@ class MatchingGame {
     else {
       this.currentPlayer = this.players[0];
     }
-    // this.flippedCards.forEach((card) => card.facedown = true);
+    this.flippedCards.forEach((card) => card.facedown = true);
+    this.flippedCards = [];
+    this.loadPlayers();
+    this.loadCards();
   }
 
   matchCardIds() {
     if (this.flippedCards.length !== 2) return;
     let [card1, card2] = this.flippedCards;
-    // setTimeout(this.cardsMatch, "1000");
-    // setTimeout(this.cardsDoNotMatch, "1000");
+
 
     if (card1.image === card2.image) {
-      this.cardsMatch(card1, card2)
+    setTimeout(() => this.cardsMatch(this.flippedCards), 2000);
+    } else {
+      setTimeout(() => this.cardsDoNotMatch(card1, card2), 2000);
     }
-    else {
-      this.cardsDoNotMatch(card1, card2);
-    }
-    this.flippedCards = [];
-    this.loadPlayers();
-    this.loadCards();
-    console.log(this.cards);
+  } 
+
   }
-}
+
+
 
 let game = new MatchingGame();
 
 
 // STILL NEEDS TO BE DONE:
 
-// Rotate turns through players for each failed match.
-// Assign points to players who make a correct match.
-
-// Maybe: Delete pair and/or add them to the player's "deck".
-
-// Maybe: Get rid of the start button and/or replace it with a reset button after we push start?
+// When all of the cards are won, display the player with the most points as the winner.
+// Get rid of start button
 
 // Ideas for fun: Can we get each player's number and score to highlight when it's their turn?
 // Ideas for fun: If we have time: add a card flip sound and/or animation when we flip a card?
+
+// When you click on one card you should have it stay
