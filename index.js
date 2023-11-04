@@ -156,7 +156,7 @@ class MatchingGame {
 
 
     if (card1.image === card2.image) {
-    setTimeout(() => this.cardsMatch(this.flippedCards), 2000);
+    setTimeout(() => this.cardsMatch(this.flippedCards), 1000);
     } else {
       setTimeout(() => this.cardsDoNotMatch(card1, card2), 2000);
     }
