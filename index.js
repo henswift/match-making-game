@@ -30,6 +30,7 @@ class MatchingGame {
       this.loadCards();
       this.createPlayers();
       this.loadPlayers();
+      startButton.style.display = 'none'; // Hen - Not sure if this is the best way to do it but this hides the start button after it's been clicked. 
     })
 
     //extrapolate event listener logic
@@ -161,10 +162,7 @@ class MatchingGame {
       setTimeout(() => this.cardsDoNotMatch(card1, card2), 2000);
     }
   } 
-
   }
-
-
 
 let game = new MatchingGame();
 
