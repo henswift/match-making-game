@@ -1,18 +1,19 @@
 let startButton = document.getElementById('start');
+let restartButton = document.getElementById('buttonRestart');
 
 const radioButtons = document.querySelectorAll('input[type="radio"][name="players"]');
 
 radioButtons.forEach(radio => {
   radio.addEventListener('change', () => {
-    startButton.style.display = 'inline'; 
+    startButton.style.display = 'inline';
   });
 });
 
 class Card {
   constructor(image, id) {
-    this.image = image; 
-    this.id = id; 
-    this.facedown = true; 
+    this.image = image;
+    this.id = id;
+    this.facedown = true;
   }
 }
 
@@ -32,27 +33,29 @@ class MatchingGame {
     this.currentPlayer = null;
     this.cpNum = 1;
     startButton.addEventListener('click', () => {
-      this.cards = []; 
+      this.cards = [];
       this.loadInstructions();
       this.createCards();
       this.loadCards();
       this.createPlayers();
       this.loadPlayers();
-      startButton.style.display = 'none'; // Hen - Not sure if this is the best way to do it but this hides the start button after it's been clicked. 
+      startButton.style.display = 'none';
+      restartButton.style.display = 'inline';
     })
 
     //extrapolate event listener logic
   }
 
   loadInstructions() {
+    // when one card is clicked, say "pick one more card"
     let instructionsDiv = document.getElementById('instructions');
     let instructions = document.createElement('h3');
     instructions.innerHTML = 'Choose Two Cards:';
     instructionsDiv.append(instructions);
   }
-  
-  createPlayers () {
-   //I ADDED THIS FOR THE RADIO BUTTONS- Leah
+
+  createPlayers() {
+    //I ADDED THIS FOR THE RADIO BUTTONS- Leah
     let playersRadio = document.getElementsByName('players');
     for (let x = 0; x < playersRadio.length; x++) {
       if (playersRadio[x].checked) {
@@ -114,7 +117,7 @@ class MatchingGame {
 
       matchCard.append(image);
       cardDiv.append(matchCard);
-      if (!card.isWon){
+      if (!card.isWon) {
         matchCard.addEventListener('click', () => {
           if (this.flippedCards.length === 2) {
             return;
@@ -126,15 +129,30 @@ class MatchingGame {
   }
 
   flipCard(card) {
-    card.facedown = !card.facedown;
-    this.loadCards();
-    card.flipped = true;
-    this.flippedCards.push(card);
-    this.matchCardIds();
+    if (card.facedown) {
+      card.facedown = !card.facedown;
+      this.loadCards();
+      // card.flipped = true;
+      this.flippedCards.push(card);
+      this.matchCardIds();
+    }
+  }
+
+  matchCardIds() {
+    if (this.flippedCards.length !== 2) return;
+    let [card1, card2] = this.flippedCards;
+
+
+    if (card1.image === card2.image) {
+      setTimeout(() => this.cardsMatch(this.flippedCards), 1000);
+    } else {
+      setTimeout(() => this.cardsDoNotMatch(card1, card2), 2000);
+    }
+
   }
 
   cardsMatch(matchedCards) {
-    for (let card of matchedCards){
+    for (let card of matchedCards) {
       this.currentPlayer.wonCards.push(card);
       card.isWon = true;
     }
@@ -142,10 +160,11 @@ class MatchingGame {
     this.flippedCards = [];
     this.loadPlayers();
     this.loadCards();
+    this.endOfGame();
   }
 
-  cardsDoNotMatch(card1, card2) {
-    
+  cardsDoNotMatch() {
+
     let indexOfCurrent = this.players.indexOf(this.currentPlayer);
     if (indexOfCurrent < this.players.length - 1) {
       this.currentPlayer = this.players[indexOfCurrent + 1];
@@ -159,26 +178,42 @@ class MatchingGame {
     this.loadCards();
   }
 
-  matchCardIds() {
-    if (this.flippedCards.length !== 2) return;
-    let [card1, card2] = this.flippedCards;
-
-
-    if (card1.image === card2.image) {
-    setTimeout(() => this.cardsMatch(this.flippedCards), 1000);
-    } else {
-      setTimeout(() => this.cardsDoNotMatch(card1, card2), 2000);
+  endOfGame() {
+    //when this.cards is empty and after loadcards is in
+    let totalActiveCards = 0;
+    let winningScore = 0;
+    for (let x = 0; x < this.players.length; x++) {
+      totalActiveCards += this.players[x].wonCards.length;
+      if (this.players[x].points >= winningScore) {
+        winningScore = this.players[x].points;
+      }
     }
-  } 
+    if (totalActiveCards === 16) {
+      this.cards = [];
+      let cardDiv = document.getElementById('cardSection');
+      cardDiv.innerHTML = "";
+      let winnerAnnouncement = document.createElement('h1');
+      for (let x = 0; x < this.players.length; x++) {
+        if (this.players[x].points === winningScore) {
+          winnerAnnouncement.innerHTML = `Player ${this.players[x].number} wins!`
+          cardDiv.append(winnerAnnouncement);
+        }
+      }
+      let instructionsDiv = document.getElementById('instructions');
+      instructionsDiv.innerHTML = '';
+    }
   }
+
+}
 
 let game = new MatchingGame();
 
 
 // STILL NEEDS TO BE DONE:
+// update instructions for when one card is clicked then say "choose one more card"
+// maybe add something visual if there's a match or not?
 
-// When all of the cards are won, display the player with the most points as the winner.
-// Get rid of start button
+// IMPORTANT!: get rid of current player when the game is won.
 
 // Ideas for fun: Can we get each player's number and score to highlight when it's their turn?
 // Ideas for fun: If we have time: add a card flip sound and/or animation when we flip a card?

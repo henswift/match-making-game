@@ -95,6 +95,19 @@ h1, h3 {
 .invisible {
   opacity: .2;
 }
+
+#restart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#restart button {
+  padding: 10px;
+  font-weight: 800;
+  background-color: red;
+  color: white;
+}
       
 /*   
   .card-inner {
