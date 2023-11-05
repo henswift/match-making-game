@@ -1,5 +1,13 @@
 let startButton = document.getElementById('start');
 
+const radioButtons = document.querySelectorAll('input[type="radio"][name="players"]');
+
+radioButtons.forEach(radio => {
+  radio.addEventListener('change', () => {
+    startButton.style.display = 'inline'; 
+  });
+});
+
 class Card {
   constructor(image, id) {
     this.image = image; 
