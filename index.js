@@ -101,7 +101,7 @@ class MatchingGame {
       let matchCard = document.createElement('div');
       let image = document.createElement('img');
       image.setAttribute('class', card.isWon ? 'card invisible' : 'card');
-      image.src = card.facedown ? 'cardfront.jpeg' : card.image;
+      image.src = card.facedown ? '/photos/cardfront.jpeg' : card.image;
 
       matchCard.append(image);
       cardDiv.append(matchCard);
