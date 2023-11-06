@@ -1,30 +1,35 @@
-*, *::before, *::after {
-    box-sizing: border-box;
-  }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
-  * {
-    margin: 0;
-  }
+* {
+  margin: 0;
+}
 
-  body {
-    background-image: url(/photos/cloudy-rainbow.jpg);
-    background-size: cover;
-    color: white;
-    background-position: center;
-    height: 100vh;
-  }
+body {
+  background-image: url(/photos/cloudy-rainbow.jpg);
+  background-size: cover;
+  color: white;
+  font-family:'Courier New', Courier, monospace;
+}
+
+button {
+  margin: 30px;
+}
 
 header {
   text-align: center;
 }
 
 h2 {
-    display: flex;
-    padding: 10px 30px 10px 30px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    border-radius: 15px;
-    width: 100%;
+  display: flex;
+  padding: 10px 30px 10px 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 15px;
+  width: 100%;
 }
 
 h3 {
@@ -37,32 +42,32 @@ form {
 }
 
 .card {
-    width: 100px;
-    height: 130px;
-    perspective: 1000px;
-    margin: 15px;
-    position: relative;
-    border-radius: 7px;
-  }
+  width: 100px;
+  height: 130px;
+  perspective: 1000px;
+  margin: 15px;
+  position: relative;
+  border-radius: 7px;
+}
 
-  /* Card Section */
-  #cardSection {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    min-height: 100px;
-    min-width: 100%;
-  }
+/* Card Section */
+#cardSection {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  min-height: 100px;
+  min-width: 100%;
+}
 
-  /* body */
-  #maincardsection {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 100px;
-    margin-top: 40px;
+/* body */
+#maincardsection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 100px;
+  margin-top: 40px;
 }
 
 #playerSection {
@@ -75,11 +80,26 @@ form {
   gap: 25px;
 }
 
-#start, #currentPlayer, .player, h1, h3, h4 {
+h1 {
+  margin: 60px;
+}
+
+#start,
+.player,
+h3,
+h4 {
   margin: 20px;
 }
 
-#start{
+#instructions {
+  padding: 20px;
+}
+
+#currentPlayer {
+  margin: 60px;
+}
+
+#start {
   background-color: rgba(0, 0, 0, 0.589);
   color: white;
   padding: 10px;
@@ -88,12 +108,19 @@ form {
   cursor: pointer;
 }
 
-h1, h3 {
+h1,
+h3 {
   margin-top: 40px;
 }
 
 .invisible {
-  opacity: .2;
+  opacity: 0;
+}
+
+.currentPlayerClass {
+  background-color: rgba(255, 0, 0, 0.507);
+  padding: 5px;
+  border-radius: 7px;
 }
 
 #restart {
@@ -108,7 +135,7 @@ h1, h3 {
   background-color: red;
   color: white;
 }
-      
+
 /*   
   .card-inner {
     width: 100%;
@@ -116,39 +143,39 @@ h1, h3 {
     transform-style: preserve-3d;
     transition: transform 0.5s;
   } */
-  
-  /* .card-front, .card-back {
+
+/* .card-front, .card-back {
     width: 100%;
     height: 100%;
     position: absolute;
     backface-visibility: hidden;
   } */
-  
-  /* .card-front img {
+
+/* .card-front img {
     object-fit: cover;
     height: 300px;
     width: 215px;
     border-radius: 15px;
   } */
 
-  /* .card-front {
+/* .card-front {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
     border-radius: 15px;
   } */
 
-  /* .card-front:hover {
+/* .card-front:hover {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 8px 24px rgba(0, 0, 0, 0.2);
     transform: scale(1.05);
   } */
-  
-  /* .card-back img {
+
+/* .card-back img {
     object-fit: cover;
     width: 215px;
     border-radius: 15px; 
   } */
 
-  /* .card-back {
+/* .card-back {
     background: white;
     border: solid 1px black;
     transform: rotateY(180deg);
@@ -156,7 +183,3 @@ h1, h3 {
     display: flex;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
   } */
-  
-
-
-  

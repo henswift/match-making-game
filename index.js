@@ -31,10 +31,10 @@ class MatchingGame {
     this.players = [];
     this.flippedCards = [];
     this.currentPlayer = null;
+    this.winners = [];
     this.cpNum = 1;
     startButton.addEventListener('click', () => {
       this.cards = [];
-      this.loadInstructions();
       this.createCards();
       this.loadCards();
       this.createPlayers();
@@ -49,13 +49,26 @@ class MatchingGame {
   loadInstructions() {
     // when one card is clicked, say "pick one more card"
     let instructionsDiv = document.getElementById('instructions');
+    instructionsDiv.innerHTML = '';
     let instructions = document.createElement('h3');
-    instructions.innerHTML = 'Choose Two Cards:';
+    if (this.flippedCards.length === 0) {
+      instructions.innerHTML = 'Choose Two Cards';
+    }
+    else if (this.flippedCards.length === 1) {
+      instructions.innerHTML = 'Choose One More Card';
+    }
+    else {
+      if (this.doCardsMatch()) {
+        instructions.innerHTML = 'Match!';
+      }
+      else {
+        instructions.innerHTML = 'Sorry! Not a match.'
+      }
+    }
     instructionsDiv.append(instructions);
   }
 
   createPlayers() {
-    //I ADDED THIS FOR THE RADIO BUTTONS- Leah
     let playersRadio = document.getElementsByName('players');
     for (let x = 0; x < playersRadio.length; x++) {
       if (playersRadio[x].checked) {
@@ -77,13 +90,13 @@ class MatchingGame {
       }
     }
     // Randomize the order of this.cards - Don't Delete This
-    // for (let i = this.cards.length - 1; i > 0; i--) {
-    //   const j = Math.floor(Math.random() * (i + 1));
-    //   [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
-    // }
+    for (let i = this.cards.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
+    }
   }
 
-  loadPlayers() { //draws cards
+  loadPlayers() {
     let playerSection = document.getElementById('playerSection');
     let current = document.getElementById('currentPlayer');
     playerSection.innerHTML = "";
@@ -94,14 +107,34 @@ class MatchingGame {
       let playerPoints = document.createElement('h2');
       playerBlock.setAttribute('class', 'player');
 
+      if (player.number === this.currentPlayer.number) {
+        playerBlock.setAttribute('class', 'currentPlayerClass');
+      }
+
       playerName = player.number;
       playerPoints = player.points;
 
-      playerBlock.append(`Player ${playerName} - Score ${playerPoints}`);
+      if (this.players.length > 1) {
+        playerBlock.append(`Player ${playerName} - Matches: ${playerPoints}`);
+      }
+      else {
+        playerBlock.append(`Successful Matches: ${playerPoints}`);
+      }
+
       playerSection.append(playerBlock);
     }
 
-    current.innerText = `Current player is:  Player ${this.currentPlayer.number}`
+
+    if (this.endOfGame()) {
+      current.innerText = '';
+      console.log(this.players.includes(this.winners));
+    }
+    else if (this.players.length > 1) {
+      current.innerText = `Current player is:  Player ${this.currentPlayer.number}`
+    }
+    else {
+      current.innerText = '';
+    }
   }
 
   loadCards() {
@@ -126,29 +159,43 @@ class MatchingGame {
         });
       }
     }
+    this.loadInstructions();
   }
 
   flipCard(card) {
     if (card.facedown) {
+      // const flipAudio = new Audio('flipcard-91468');
+      // flipAudio.play();
       card.facedown = !card.facedown;
-      this.loadCards();
-      // card.flipped = true;
       this.flippedCards.push(card);
-      this.matchCardIds();
+      this.loadCards();
+      this.doCardsMatch();
     }
   }
 
-  matchCardIds() {
-    if (this.flippedCards.length !== 2) return;
+  doCardsMatch() {
+    if (this.matchingInProgress || this.flippedCards.length !== 2) return;
+
+    this.matchingInProgress = true; //chatgpt recommended this after I had problems with the timeout causing this function to run twice at a time.
+
     let [card1, card2] = this.flippedCards;
 
-
     if (card1.image === card2.image) {
-      setTimeout(() => this.cardsMatch(this.flippedCards), 1000);
-    } else {
-      setTimeout(() => this.cardsDoNotMatch(card1, card2), 2000);
+      setTimeout(() => {
+        this.cardsMatch(this.flippedCards);
+        this.matchingInProgress = false;
+      },
+        1000);
+      return true;
     }
-
+    else {
+      setTimeout(() => {
+        this.cardsDoNotMatch(card1, card2);
+        this.matchingInProgress = false;
+      },
+        1000);
+      return false;
+    }
   }
 
   cardsMatch(matchedCards) {
@@ -164,7 +211,6 @@ class MatchingGame {
   }
 
   cardsDoNotMatch() {
-
     let indexOfCurrent = this.players.indexOf(this.currentPlayer);
     if (indexOfCurrent < this.players.length - 1) {
       this.currentPlayer = this.players[indexOfCurrent + 1];
@@ -193,29 +239,27 @@ class MatchingGame {
       let cardDiv = document.getElementById('cardSection');
       cardDiv.innerHTML = "";
       let winnerAnnouncement = document.createElement('h1');
+      let gifImage = document.createElement('img');
+      gifImage.src = 'https://media.giphy.com/media/SABpzb2ivrS0g4Hgbb/giphy.gif';
+
       for (let x = 0; x < this.players.length; x++) {
         if (this.players[x].points === winningScore) {
-          winnerAnnouncement.innerHTML = `Player ${this.players[x].number} wins!`
+          if (this.players.length > 1) {
+            winnerAnnouncement.innerHTML = `Player ${this.players[x].number} wins!`
+            this.winners.push(this.players[x].number);
+          }
+          else {
+            winnerAnnouncement.innerHTML = `You did it!`
+          }
           cardDiv.append(winnerAnnouncement);
+          cardDiv.append(gifImage);
         }
       }
       let instructionsDiv = document.getElementById('instructions');
       instructionsDiv.innerHTML = '';
+      return true;
     }
   }
-
 }
 
 let game = new MatchingGame();
-
-
-// STILL NEEDS TO BE DONE:
-// update instructions for when one card is clicked then say "choose one more card"
-// maybe add something visual if there's a match or not?
-
-// IMPORTANT!: get rid of current player when the game is won.
-
-// Ideas for fun: Can we get each player's number and score to highlight when it's their turn?
-// Ideas for fun: If we have time: add a card flip sound and/or animation when we flip a card?
-
-// When you click on one card you should have it stay
